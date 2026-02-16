@@ -26,11 +26,11 @@ export type News = {
 
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
     throw new Error("MICROCMS_SERVICE_DOMAIN is required");
-}
+};
 
 if (!process.env.MICROCMS_API_KEY) {
     throw new Error("MICROCMS_API_KEY is required");
-}
+};
 
 const client = createClient({
     serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
@@ -43,13 +43,25 @@ export const getMembersList = async (queries?: MicroCMSQueries) => {
         queries,
     });
   return listData;
-}
+};
 
 export const getNewsList = async (queries?: MicroCMSQueries) => {
-    const ListData = await client
+    const listData = await client
         .getList<News>({
             endpoint: "news",
             queries,
         });
-        return ListData;
-}
+        return listData;
+};
+
+export const getNewsDetail = async (
+    contentId: string,
+    queries?: MicroCMSQueries
+) => {
+    const detailData = await client.getListDetail<News> ({
+        endpoint: "news",
+        contentId,
+        queries,
+    });
+    return detailData;
+};
